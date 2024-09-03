@@ -43,6 +43,7 @@ Before you start, make sure you have the following installed:
    ```
    ETHERSCAN_API_KEY=your_etherscan_project_id
    PRIVATE_KEY=your_private_key
+   SEPOLIA_RPC_URL=your_sepolia_rpc_url
    ```
    Replace `your_etherscan_project_id` with your Etherscan API key and `your_private_key` with your deployment account's private key.
 
@@ -73,7 +74,7 @@ export default config;
 The `merkle.ts` script is designed to build a Merkle tree and generate the necessary proofs from a CSV file listing the token recipients and amounts.
 
 1. Prepare your input CSV file:
-   Place a file named `addresses.csv` in the `feed-files` directory with the following format:
+   Place a file named `addresses.csv` in the `merkleFiles` directory with the following format:
    ```
    user_address,amount
    0x1234...,100
@@ -87,7 +88,7 @@ The `merkle.ts` script is designed to build a Merkle tree and generate the neces
 
 Upon execution, two output files will be created:
 - `tree.json`: Contains the entire Merkle tree data.
-- `feed-files/proofs.json`: Contains the generated Merkle proofs for each listed address.
+- `merkleFiles/proofs.json`: Contains the generated Merkle proofs for each listed address.
 
 ## Contract Deployment
 
@@ -107,7 +108,7 @@ Upon execution, two output files will be created:
 
 ## Proof Generation
 
-Merkle proofs are automatically generated when you run the `merkle.ts` script. The proofs will be located in the `feed-files/proofs.json` file.
+Merkle proofs are automatically generated when you run the `merkle.ts` script. The proofs will be located in the `merkleFiles/proofs.json` file.
 
 If you need to generate proofs for specific addresses, you can modify the following section in `merkle.ts`:
 
@@ -136,7 +137,7 @@ You can interact with your deployed contract using Hardhat tasks or custom scrip
 
 ```typescript
 import { ethers } from "hardhat";
-import proofs from "../feed-files/proofs.json";
+import proofs from "../merkleFiles/proofs.json";
 
 async function main() {
   const [signer] = await ethers.getSigners();
